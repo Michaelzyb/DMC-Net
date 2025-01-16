@@ -27,7 +27,7 @@ class DeepLabV3(nn.Module):
         return output
 
 
-# ASPP部分
+
 class ASPP(nn.Module):
     def __init__(self, num_classes):
         super(ASPP, self).__init__()
@@ -123,7 +123,7 @@ class ASPP_Bottleneck(nn.Module):
         return out
 
 
-# ResNet部分
+
 # camera-ready
 
 # NOTE! OS: output stride, the ratio of input image resolution to final output resolution (OS16: output size is (img_h/16, img_w/16)) (OS8: output size is (img_h/8, img_w/8))
