@@ -284,16 +284,16 @@ def generate_cutout_mask(img_size, ratio=2):  # ratio=random.choice([2,3,4,5])
     return mask.float()
 
 
-# 保存图片结果
+
 class SaveVisResults:
     def __init__(self, log_path, num_classes, num_works):
-        # 其他初始化操作
-        self.executor = ThreadPoolExecutor(num_works)  # 创建线程池
+        
+        self.executor = ThreadPoolExecutor(num_works)  
         log_path = os.path.join(log_path, 'test_predicts')
         os.makedirs(log_path, exist_ok=True)
         self.log_path = log_path
         self.num_classes = num_classes
-        # 各类别色表
+      
         self.color_mapping = {
             # 0: [192, 192, 192],  # Class 0 - Light gray
             1: [120, 0, 0],  # Class 1 - Red
@@ -306,7 +306,7 @@ class SaveVisResults:
     def log_show_predicts(self, std, mean, batch, mode='epoch_val'):
         index, imgs, masks, predicts = batch
         b, c, h, w = imgs.shape
-        # 所有的图片都是默认以三通道输入的，但某些单通道的数据集std和mean设置的列表长度是1，因此复制成3长度
+       
         std = std if len(std) == 3 else std * 3
         mean = mean if len(mean) == 3 else mean * 3
         # de-normalize
@@ -322,7 +322,7 @@ class SaveVisResults:
             mask_colors[np.where(masks == class_id)] = self.color_mapping[class_id]
             predict_colors[np.where(predicts == class_id)] = self.color_mapping[class_id]
 
-        # 使用多线程保存图片，传入图片，真实类别掩码，预测类别掩码
+       
         for id, (img, mask_color, predict_color) in enumerate(zip(imgs, mask_colors, predict_colors)):
             if mode == 'final_test':
                 self.executor.submit(self.save_final_image, id, img, mask_color, predict_color, index, b, masks[id], predicts[id])
@@ -333,7 +333,6 @@ class SaveVisResults:
     def save_image(self, id, img, mask_color, predict_color, index, b):
         # Subtract the scaled foreground image from the background image
         # predict_color = cv2.cvtColor(predict_color, cv2.COLOR_RGB2BGR)
-        # 颜色覆盖在图像上
         # predict_color = cv2.addWeighted(img, 1, predict_color, 0.5, 0)
         # Concatenate resized annotation color image and prediction mask horizontally
         merged_image = np.concatenate((img, mask_color, predict_color), axis=1)
@@ -359,4 +358,4 @@ class SaveVisResults:
         cv2.imwrite(os.path.join(self.log_path, f'{int(index * b + id)}_mask.png'), mask_color)
 
     def cleanup(self):
-        self.executor.shutdown()  # 关闭线程池，确保所有任务都完成
+        self.executor.shutdown()  
