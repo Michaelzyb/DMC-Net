@@ -1,5 +1,5 @@
 from models.total_supvised import *
-from models.total_supvised.hdrnet import *
+from models.total_supvised.dmcnet import *
 from models.total_supvised.u_net import *
 
 
