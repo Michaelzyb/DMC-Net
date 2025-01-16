@@ -41,7 +41,7 @@ def cac_fps(model_path, dummy_input):
     return fps
 
 if __name__ == '__main__':
-    model_name = 'hdrnet'
+    model_name = 'dmcnet'
     out_path = f'./{model_name}.onnx'
     size = (224, 224)
     dummy_input = torch.rand(1, 3, *size).cuda()
