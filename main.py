@@ -17,7 +17,7 @@ def train_model(model_name):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=str, default=model_name, help='model_name',
-                        choices=['hdrnet', 'u_net', 'bisenet', 'edrnet', 'deeplabv3', 'seg_net', 'seg_former', 'pga_net', 'bisenet', 'topformer', 'swin_unet'])
+                        choices=['dmcnet', 'u_net', 'bisenet', 'edrnet', 'deeplabv3', 'seg_net', 'seg_former', 'pga_net', 'bisenet', 'topformer'])
     parser.add_argument('--benchmark', type=str, default='neuseg', help='dataset',
                         choices=['KolektorSDD', 'KolektorSDD2', 'neuseg', 'carpet', 'hazelnut', 'MT', 'CrackForest', 'RSDD1',
                                  'Crack500', 'CDD', 'DAGM1', 'DAGM2', 'DAGM3', 'DAGM4', 'DAGM5', 'DAGM6', 'DAGM7', 'DAGM8', 'DAGM9', 'DAGM10'])
@@ -42,7 +42,7 @@ def train_model(model_name):
         NetWork.run(loaders['train'], unlabeled_loader=None, val_loader=loaders['val'], test_loader=loaders['test'], checkpoint=args.checkpoint)
 
 if __name__ == '__main__':
-    models_to_train = ['hdrnet', 'hdrnet']
+    models_to_train = ['dmcnet']
     for model_name in models_to_train:
         print(model_name)
         train_model(model_name)
